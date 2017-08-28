@@ -1,0 +1,56 @@
+{
+	"id": "/course",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"title": "Golf Course",
+	"description": "A golf course",
+	"properties": {
+		"id": {
+			"type": "string",
+			"description": "System generated unique ID for the course",
+			"example": "123-ABC"
+		},
+		"name": {
+			"type": "string",
+			"description": "The name of the course (Duh)",
+			"example": "Wentworth"
+		},
+		"holes": {
+			"type": "array",
+			"minItems": 9,
+			"maxItems": 18,
+			"uniqueItems": true,
+			"items": {
+				"$ref": "hole.json"
+			}
+		}
+	},
+	"required": ["name", "holes"],
+	"links": [
+		{
+			"title": "Available courses",
+			"description": "An exhaustive list of all available courses",
+			"rel": "instances",
+			"href": "/courses",
+			"method": "GET",
+			"targetSchema": {
+				"type": "object",
+				"properties": {
+					"courses": {
+						"type": "array",
+						"items": {"rel": "self"}
+					}
+				}
+			}
+		},
+		{
+			"title": "Create a course",
+			"description": "Add another course",
+			"href": "/courses",
+			"method": "POST",
+			"schema": {
+				"rel": "self"
+			}
+		}
+	]
+}

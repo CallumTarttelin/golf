@@ -1,0 +1,28 @@
+{
+	"id": "/hole",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Hole",
+	"type": "object",
+	"properties": {
+		"number": {
+			"type": "integer",
+			"description": "The flag number",
+			"example": 3
+		},
+		"description": {
+			"type": "string",
+			"description": "Description of the hole"
+		},
+		"par": {
+			"type": "integer",
+			"description": "Par for the hole",
+			"example": 3,
+			"minimum": 2,
+			"maximum": 9
+		}
+	},
+	"required": [
+		"number",
+		"par"
+	]
+}

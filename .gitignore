@@ -1,0 +1,11 @@
+docs/node_modules
+app/build
+app/.gradle
+app/node_modules
+app/target
+
+### IntelliJ IDEA ###
+app/.idea
+app/*.iws
+app/*.iml
+app/*.ipr
