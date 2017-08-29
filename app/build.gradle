@@ -4,16 +4,25 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath 'com.moowork.gradle:gradle-node-plugin:1.2'
+		classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
 	}
+}
+plugins {
+	id 'com.sourcemuse.mongo' version '1.0.0'
 }
 
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: "com.moowork.node"
+
+
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -22,7 +31,6 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
@@ -30,6 +38,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.assertj:assertj-core:3.8.0')
+}
+
+mongo {
+	port 17987
 }
 
 node {
@@ -45,3 +58,10 @@ node {
 task jsDist(type: NpmTask, dependsOn: 'npm_test') {
 	args = ['run', 'deploy']
 }
+
+test {
+	systemProperty 'spring.profiles.active', 'test'
+}
+
+test.dependsOn startMongoDb
+test.finalizedBy stopMongoDb
